@@ -29,4 +29,6 @@ public class GameStatus : MonoBehaviour
     public static float knowledge;
     public static float fun;
     public static float energy;
+    public static bool classTime;
+    public static int day;
 }

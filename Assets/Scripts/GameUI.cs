@@ -89,7 +89,35 @@ public class GameUI : MonoBehaviour
 
     private void SeeItem(Parameters parameters)
     {
-        string interactText = "Interact with \n" + parameters.GetStringExtra("item", "SomeItem");
+
+        string item = parameters.GetStringExtra("item", "SomeItem");
+        string interactText;
+        if (item == "Bed")
+        {
+            interactText = "BED\nE - Nap (1 hour)\nR - Sleep (8 hours)";
+        }
+        else if (item == "Laptop") {
+            interactText = "LAPTOP\nE - Study (1 hour)";
+            if(GameStatus.classTime == true)
+            {
+                interactText = interactText + "\nR - Attend Class (3 hours)";
+            }
+        }
+        else if (item == "Bathroom")
+        {
+            interactText = "BATHROOM\nE - Clean Up (30 minutes)";
+        }
+        else if (item == "Leave Room")
+        {
+            interactText = "LEAVE ROOM\nE - Jog (30 minutes)\nR - Eat (1 hour)\nQ - Go Party (6 hours)";
+        }
+
+        else
+        {
+            interactText = "Interact with \n" + parameters.GetStringExtra("item", "SomeItem");
+        }
+            
+            
         Interact.SetActive(true);
         InteractText.text = interactText;
         
