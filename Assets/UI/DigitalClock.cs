@@ -6,29 +6,36 @@ using System;
 
 public class DigitalClock : MonoBehaviour
 {
-    private Text textClock;
+    [SerializeField ]private Text textClock;
+    private int hours = 10;
+    private int minutes = 0;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        //EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK", this.updateClock);
+        textClock.text = hours.ToString() + ":" + minutes.ToString() + "0";
     }
 
-    private void Awake()
-    {
-        textClock = GetComponent<Text>();
-    }
     // Update is called once per frame
     void Update()
     {
-        DateTime time = DateTime.Now;
-        string hour = LeadingZero(time.Hour);
-        string minute = LeadingZero(time.Minute);
-        string second = LeadingZero(time.Second);
-        textClock.text = hour + ":" + minute + ":" + second;
     }
 
-    string LeadingZero(int n)
+    public void updateClock()
     {
-        return n.ToString().PadLeft(2, '0');
+        minutes += 3;
+
+        if(minutes >= 6)
+        {
+            minutes = 0;
+            hours++;
+            if(hours > 23)
+            {
+                hours = 0;
+            }
+        }
+
+        textClock.text = hours.ToString() + ":" + minutes.ToString() + "0";
     }
 }
