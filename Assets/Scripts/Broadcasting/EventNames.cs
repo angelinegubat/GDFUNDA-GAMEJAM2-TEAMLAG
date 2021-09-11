@@ -54,6 +54,11 @@ public class EventNames {
 
 	public const string ON_NEAR_ITEM = "ON_NEAR_ITEM";
 	public const string ON_NO_ITEM = "ON_NO_ITEM";
+	public const string UPDATE_CLOCK = "UPDATE_CLOCK";
+	public const string CHANGE_NIGHT = "CHANGE_NIGHT";
+	public const string CHANGE_DAY = "CHANGE_DAY";
+	public const string CHANGE_SET = "CHANGE_SET";
+
 }
 
 
