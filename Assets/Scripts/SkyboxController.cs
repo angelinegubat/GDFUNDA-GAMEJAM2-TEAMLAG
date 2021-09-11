@@ -7,6 +7,7 @@ public class SkyboxController : MonoBehaviour
     public Material day;
     public Material night;
     public Material sets;
+    public GameObject directionalLight;
     // Start is called before the first frame update
     void Start()
     {
@@ -28,16 +29,39 @@ public class SkyboxController : MonoBehaviour
 
     public void changeNight()
     {
-        RenderSettings.skybox = night;
+        this.StartCoroutine(this.changeNight2(2.0f));
     }
 
     public void changeDay()
     {
-        RenderSettings.skybox = day;
+        this.StartCoroutine(this.changeDay2(2.0f));
     }
 
     public void changeSet()
     {
+        this.StartCoroutine(this.changeSet2(2.0f));
+    }
+
+    public IEnumerator changeNight2(float secs)
+    {
+        yield return new WaitForSeconds(secs);
+        directionalLight.SetActive(false);
+        RenderSettings.skybox = night;
+    }
+
+    public IEnumerator changeDay2(float secs)
+    {
+        yield return new WaitForSeconds(secs);
+        directionalLight.SetActive(true);
+        RenderSettings.skybox = day;
+    }
+
+    public IEnumerator changeSet2(float secs)
+    {
+        yield return new WaitForSeconds(secs);
+        directionalLight.SetActive(true);
         RenderSettings.skybox = sets;
     }
+
+    
 }
