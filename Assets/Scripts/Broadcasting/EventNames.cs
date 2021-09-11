@@ -6,6 +6,7 @@ using System.Collections;
  * Created By: NeilDG
  */ 
 public class EventNames {
+	/*
 	public const string ON_UPDATE_SCORE = "ON_UPDATE_SCORE";
 	public const string ON_CORRECT_MATCH = "ON_CORRECT_MATCH";
 	public const string ON_WRONG_MATCH = "ON_WRONG_MATCH";
@@ -49,7 +50,10 @@ public class EventNames {
 	public class S18_Events {
 		public const string ON_FIRST_SCAN = "FIRST_TARGET_SCAN";
 		public const string ON_FINAL_SCAN = "ON_FINAL_SCAN";
-	}
+	}*/
+
+	public const string ON_NEAR_ITEM = "ON_NEAR_ITEM";
+	public const string ON_NO_ITEM = "ON_NO_ITEM";
 }
 
 
