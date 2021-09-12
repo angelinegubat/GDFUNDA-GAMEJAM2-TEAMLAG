@@ -56,6 +56,7 @@ public class Interact : MonoBehaviour
                 GameStatus.health -=0.2f;
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
 
             }
             else if(Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Bed")
@@ -68,6 +69,7 @@ public class Interact : MonoBehaviour
                 GameStatus.health -= 0.05f;
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Laptop")
             {
