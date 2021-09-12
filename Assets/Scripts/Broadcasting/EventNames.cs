@@ -60,12 +60,20 @@ public class EventNames {
 	public const string UPDATE_CLOCK_3 = "UPDATE_CLOCK_3";
 	public const string UPDATE_CLOCK_6 = "UPDATE_CLOCK_6";
 	public const string UPDATE_CLOCK_8 = "UPDATE_CLOCK_8";
+	public const string UPDATE_CLOCK_24 = "UPDATE_CLOCK_24";
 	public const string CHANGE_NIGHT = "CHANGE_NIGHT";
 	public const string CHANGE_DAY = "CHANGE_DAY";
 	public const string CHANGE_SET = "CHANGE_SET";
 	public const string CLASS_AVAILABLE = "CLASS_AVAILABLE";
 	public const string CLASS_UNAVAILABLE = "CLASS_UNAVAILABLE";
-
+	public const string ON_UPDATE_BARS = "ON_UPDATE_BARS";
+	public const string ON_LOW_FUN = "ON_LOW_FUN";
+	public const string ON_LOW_FUN2 = "ON_LOW_FUN2";
+	//public const string TEXT_LOW_HEALTH = "ON_LOW_FUN";
+	public const string TEXT_GOOD_HEALTH = "ON_GOOD_FUN";
+	public const string FAINT = "FAINT";
+	public const string SICKDAY = "SICKDAY";
+	public const string COVID = "COVID";
 }
 
 

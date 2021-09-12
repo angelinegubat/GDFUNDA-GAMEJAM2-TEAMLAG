@@ -20,12 +20,14 @@ public class DigitalClock : MonoBehaviour
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_3", this.update3);
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_6", this.update6);
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_8", this.update8);
+        EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_24", this.update24);
         textClock.text = "Day " + GameStatus.day + "\n" + hours.ToString() + ":" + minutes.ToString() + "0";
     }
 
     // Update is called once per frame
     void Update()
     {
+        
     }
 
 
@@ -170,6 +172,16 @@ public class DigitalClock : MonoBehaviour
         {
             EventBroadcaster.Instance.PostEvent("CHANGE_DAY");
         }
+
+        textClock.text = "Day " + GameStatus.day + "\n" + hours.ToString() + ":" + minutes.ToString() + "0";
+
+        checkClass();
+    }
+
+    public void update24()
+    {
+       
+        GameStatus.day++;
 
         textClock.text = "Day " + GameStatus.day + "\n" + hours.ToString() + ":" + minutes.ToString() + "0";
 

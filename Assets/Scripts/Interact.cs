@@ -17,13 +17,9 @@ public class Interact : MonoBehaviour
     void Start()
     {
         GameStatus.classTime = true;
-
-        string[] locations = { "Foyer Cabinet", "Foyer Shelves", "Dining Cabinet", "Basket", "Toilet", "Sink", "Vase", "Hallway Shelves", "Bed", "Bedroom Shelves", "Bedroom Desk", "Kitchen Cabinets", "Trashbin", "Boxes",
-                                "Fridge", "Left Locker", "Right Locker", "Kitchen Shelves", "Living Room Cabinet", "TV"};
-
-        int RNG = Random.Range(0, locations.Length);
-
         
+
+
     }
 
     void Awake()
@@ -37,6 +33,7 @@ public class Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         selectItemFromRay();
 
         if (HasItemTargetted())
@@ -45,59 +42,167 @@ public class Interact : MonoBehaviour
             updateItemParams.PutExtra("item", itemBeingPickedUp.gameObject.name);
             EventBroadcaster.Instance.PostEvent("ON_NEAR_ITEM", updateItemParams);
 
+            //KNOWLEDGE -1/4H
+            //HEALTH -1/2H
+            //FUN -1/2H
+            //ENERGY -1/1H
             if (Input.GetKeyDown(KeyCode.R) && itemBeingPickedUp.name == "Bed")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_8");
+                GameStatus.energy = 1.0f;
+                GameStatus.fun = GameStatus.fun / 2;
+                GameStatus.knowledge -= 0.2f;
+                GameStatus.health -=0.2f;
+                levelStatus();
+                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
+
             }
             else if(Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Bed")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_1");
+                GameStatus.energy += 0.10f;
+                GameStatus.fun -= 0.05f;
+                GameStatus.knowledge -= 0.025f;
+                GameStatus.health -= 0.05f;
+                levelStatus();
+                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Laptop")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_1");
+                GameStatus.energy -= 0.1f;
+                GameStatus.fun += 0.2f;
+                GameStatus.knowledge -= 0.025f;
+                GameStatus.health -= 0.05f;
+                levelStatus();
+                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
-            else if (Input.GetKeyDown(KeyCode.R) && itemBeingPickedUp.name == "Laptop" && GameStatus.classTime == true)
+            else if (Input.GetKeyDown(KeyCode.R) && itemBeingPickedUp.name == "Laptop" )
             {
-                EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
-                EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_3");
+                if (GameStatus.fun <= 0.1f)
+                {
+                    EventBroadcaster.Instance.PostEvent("ON_LOW_FUN2");
+                }
+                else
+                {
+                    EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
+                    EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_1");
+
+                    GameStatus.energy -= 0.1f;
+                    GameStatus.fun -= 0.1f;
+                    GameStatus.knowledge += 0.1f;
+                    GameStatus.health -= 0.05f;
+                    levelStatus();
+                    EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                    checkEvents();
+                }
+            }
+            else if (Input.GetKeyDown(KeyCode.Q) && itemBeingPickedUp.name == "Laptop" && GameStatus.classTime == true)
+            {
+                if (GameStatus.day == 5)
+                {
+
+                }
+                else
+                {
+                    if (GameStatus.fun <= 0.1f)
+                    {
+                        EventBroadcaster.Instance.PostEvent("ON_LOW_FUN");
+                    }
+                    else
+                    {
+                        EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
+                        EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_3");
+                        if (GameStatus.energy <= 0.2f)
+                        {
+                            GameStatus.energy -= 0.3f;
+                            GameStatus.fun -= 0.3f;
+                            GameStatus.knowledge += 0.2f;
+                            GameStatus.health -= 0.05f;
+                        }
+                        else
+                        {
+                            GameStatus.energy -= 0.3f;
+                            GameStatus.fun -= 0.3f;
+                            GameStatus.knowledge += 0.4f;
+                            GameStatus.health -= 0.05f;
+                        }
+
+                        levelStatus();
+                        EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                        checkEvents();
+                    }
+                }
+                
             }
             else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Bathroom")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_30");
+                GameStatus.energy -= 0.05f;
+                GameStatus.fun -= 0.05f;
+                GameStatus.knowledge -= 0.0125f;
+                GameStatus.health += 0.1f;
+                levelStatus();
+                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Leave Room")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_30");
+                GameStatus.energy -= 0.2f;
+                GameStatus.fun += 0.1f;
+                GameStatus.knowledge -= 0.0125f;
+                GameStatus.health += 0.1f;
+                levelStatus();
+                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.R) && itemBeingPickedUp.name == "Leave Room")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_1");
+                GameStatus.energy -= 0.1f;
+                //GameStatus.fun -= 0.025f;
+                GameStatus.knowledge -= 0.05f;
+                GameStatus.health += 0.3f;
+                levelStatus();
+                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.Q) && itemBeingPickedUp.name == "Leave Room")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_6");
+                GameStatus.energy -= 0.6f;
+                GameStatus.fun = 1.0f;
+                GameStatus.knowledge -= 0.15f;
+                GameStatus.health -= 0.3f;
+
+                int RNG = Random.Range(0, 11);
+                if (RNG <= 3)
+                {
+                    EventBroadcaster.Instance.PostEvent("COVID");
+                }
+                levelStatus();
+                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
-            else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == GameStatus.location)
-            {
-                EventBroadcaster.Instance.PostEvent("ON_WIN_GAME");
-            }
-            else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Dog")
-            {
-                EventBroadcaster.Instance.PostEvent("USED_ITEM");
-            }
+            
         }
         else
         {
             EventBroadcaster.Instance.PostEvent("ON_NO_ITEM");
         }
+        
+        
     }
 
     private bool HasItemTargetted()
@@ -138,6 +243,53 @@ public class Interact : MonoBehaviour
     public void classUnavailable()
     {
         GameStatus.classTime = false;
+    }
+
+    public void levelStatus()
+    {
+        if (GameStatus.fun < 0)
+        {
+            GameStatus.fun = 0.0f;
+        }
+        if (GameStatus.health < 0.0f)
+        {
+            GameStatus.health = 0.0f;
+        }
+        if (GameStatus.energy < 0.0f)
+        {
+            GameStatus.energy = 0.0f;
+        }
+        if (GameStatus.knowledge < 0.0f)
+        {
+            GameStatus.knowledge = 0.0f;
+        }
+        if(GameStatus.fun > 1.0f)
+        {
+            GameStatus.fun = 1.0f;
+        }
+        if (GameStatus.energy > 1.0f)
+        {
+            GameStatus.energy = 1.0f;
+        }
+        if (GameStatus.knowledge > 1.0f)
+        {
+            GameStatus.knowledge = 1.0f;
+        }
+        if (GameStatus.health > 1.0f)
+        {
+            GameStatus.health = 1.0f;
+        }
+    }
+
+    public void checkEvents()
+    {
+        if(GameStatus.health == 0.00f)
+        {
+            EventBroadcaster.Instance.PostEvent("SICKDAY");
+        } else if (GameStatus.energy == 0.00f)
+        {
+            EventBroadcaster.Instance.PostEvent("FAINT");
+        }
     }
 }
 
