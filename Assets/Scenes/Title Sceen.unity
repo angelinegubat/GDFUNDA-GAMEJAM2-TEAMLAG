@@ -514,7 +514,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: <Insert name of game here>
+  m_Text: Homeschool
 --- !u!224 &8349450154974313946
 RectTransform:
   m_ObjectHideFlags: 0

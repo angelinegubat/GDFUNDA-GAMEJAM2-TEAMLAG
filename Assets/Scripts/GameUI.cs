@@ -14,6 +14,7 @@ public class GameUI : MonoBehaviour
     public GameObject SickScreen;
     public GameObject CovidScreen;
     public GameObject FaintScreen;
+    public GameObject StartScreen;
     public GameObject Interact;
     public Text InteractText;
     public Image health;
@@ -34,10 +35,11 @@ public class GameUI : MonoBehaviour
         GameStatus.knowledge = 0.5f;
         GameStatus.energy = 1.0f;
         UpdateBars();
+        StartScreen.SetActive(true);
         //currentTime = Time.time;
         //GameStatus.location = "Library";
         //Cursor.lockState = CursorLockMode.Confined;
-        
+
     }
 
     void Awake()
@@ -106,7 +108,12 @@ public class GameUI : MonoBehaviour
         }
         else if (item == "Laptop") {
             interactText = "LAPTOP\nE - Play Games (1 hour)\nR - Study (1 hour)";
-            if(GameStatus.classTime == true)
+
+            if (GameStatus.classTime == true && GameStatus.day == 5)
+            {
+                interactText = interactText + "\nQ - Take Exam";
+            }
+            else if (GameStatus.classTime == true)
             {
                 interactText = interactText + "\nQ - Attend Class (3 hours)";
             }
