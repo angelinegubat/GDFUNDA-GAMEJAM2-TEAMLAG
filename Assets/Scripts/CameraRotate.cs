@@ -8,6 +8,9 @@ public class CameraRotate : MonoBehaviour
     public Transform playerBody;
     float xRotation = 0f;
     public GameObject Paused;
+    public GameObject Sick;
+    public GameObject Faint;
+    public GameObject Corona;
     void Start()
     {
         //Cursor.lockState = CursorLockMode.Locked;
@@ -15,7 +18,7 @@ public class CameraRotate : MonoBehaviour
     
     void Update()
     {
-        if (!Paused.active)
+        if (!Paused.active && !Sick.active && !Faint.active && !Corona.active)
         {
             float mouseX = Input.GetAxis("Mouse X") * Speed * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * Speed * Time.deltaTime;

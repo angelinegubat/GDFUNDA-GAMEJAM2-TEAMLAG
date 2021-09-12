@@ -11,6 +11,9 @@ public class GameUI : MonoBehaviour
     [SerializeField] GameObject GameWinScreen;
     public GameObject NoPass;*/
     public GameObject PauseScreen;
+    public GameObject SickScreen;
+    public GameObject CovidScreen;
+    public GameObject FaintScreen;
     public GameObject Interact;
     public Text InteractText;
     public Image health;
@@ -18,6 +21,7 @@ public class GameUI : MonoBehaviour
     public Image knowledge;
     public Image energy;
     public GameObject NoFun;
+    public GameObject NoFun2;
     //public Text ItemText;
     public float currentTime = 0f;
     public float startTime = 200f;
@@ -42,6 +46,10 @@ public class GameUI : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.ON_NO_ITEM, this.NoItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_UPDATE_BARS, this.UpdateBars);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_LOW_FUN, this.LowFun);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_LOW_FUN2, this.LowFun2);
+        EventBroadcaster.Instance.AddObserver(EventNames.FAINT, this.Faint);
+        EventBroadcaster.Instance.AddObserver(EventNames.SICKDAY, this.SickDay);
+        EventBroadcaster.Instance.AddObserver(EventNames.COVID, this.Covid);
         /*
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_ON, this.SeeItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_OFF, this.NoItem);
@@ -63,24 +71,12 @@ public class GameUI : MonoBehaviour
     {
         if (!PauseScreen.active )
         {
-            //startTime -= 1 * Time.deltaTime;
-            //GameStatus.time = startTime;
-            //timerText.text = startTime.ToString("0.0");
-            /*
-            if (startTime <= 0)
-            {
-                startTime = 0;
-                //EventBroadcaster.Instance.PostEvent(EventNames.FindShoe.ON_GAME_OVER);
-                GameOver();
-            }*/
+            
             if (Input.GetKey(KeyCode.Escape))
             {
-                PauseScreen.SetActive(true);
+                PauseScreen.SetActive(!PauseScreen.active);
             } 
-            /*if(Input.GetKey("e") && InteractText.text == "Interact with /nDog" && ItemText.text == "")
-            {
-                goAway();
-            }*/
+            
         }
         
     }
@@ -152,6 +148,21 @@ public class GameUI : MonoBehaviour
         energy.fillAmount = GameStatus.energy;
     }
 
+    public void LowFun2()
+    {
+        this.StartCoroutine(this.ShowHide2(5.0f));
+
+    }
+
+    public IEnumerator ShowHide2(float secs)
+    {
+
+        NoFun2.SetActive(true);
+        yield return new WaitForSeconds(secs);
+        NoFun2.SetActive(false);
+
+    }
+
     public void LowFun()
     {
         this.StartCoroutine(this.ShowHide(5.0f));
@@ -165,5 +176,19 @@ public class GameUI : MonoBehaviour
         yield return new WaitForSeconds(secs);
         NoFun.SetActive(false);
 
+    }
+
+    public void Faint()
+    {
+        FaintScreen.SetActive(true);
+    }
+    public void SickDay()
+    {
+        SickScreen.SetActive(true);
+    }
+
+    public void Covid()
+    {
+        CovidScreen.SetActive(true);
     }
 }

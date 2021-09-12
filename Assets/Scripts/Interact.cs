@@ -17,13 +17,9 @@ public class Interact : MonoBehaviour
     void Start()
     {
         GameStatus.classTime = true;
-
-        string[] locations = { "Foyer Cabinet", "Foyer Shelves", "Dining Cabinet", "Basket", "Toilet", "Sink", "Vase", "Hallway Shelves", "Bed", "Bedroom Shelves", "Bedroom Desk", "Kitchen Cabinets", "Trashbin", "Boxes",
-                                "Fridge", "Left Locker", "Right Locker", "Kitchen Shelves", "Living Room Cabinet", "TV"};
-
-        int RNG = Random.Range(0, locations.Length);
-
         
+
+
     }
 
     void Awake()
@@ -37,6 +33,7 @@ public class Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         selectItemFromRay();
 
         if (HasItemTargetted())
@@ -59,6 +56,7 @@ public class Interact : MonoBehaviour
                 GameStatus.health -=0.2f;
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+
             }
             else if(Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Bed")
             {
@@ -81,18 +79,27 @@ public class Interact : MonoBehaviour
                 GameStatus.health -= 0.05f;
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.R) && itemBeingPickedUp.name == "Laptop" )
             {
-                EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
-                EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_1");
+                if (GameStatus.fun <= 0.1f)
+                {
+                    EventBroadcaster.Instance.PostEvent("ON_LOW_FUN2");
+                }
+                else
+                {
+                    EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
+                    EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_1");
 
-                GameStatus.energy -= 0.1f;
-                GameStatus.fun -= 0.1f;
-                GameStatus.knowledge += 0.1f;
-                GameStatus.health -= 0.05f;
-                levelStatus();
-                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                    GameStatus.energy -= 0.1f;
+                    GameStatus.fun -= 0.1f;
+                    GameStatus.knowledge += 0.1f;
+                    GameStatus.health -= 0.05f;
+                    levelStatus();
+                    EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                    checkEvents();
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Q) && itemBeingPickedUp.name == "Laptop" && GameStatus.classTime == true)
             {
@@ -121,6 +128,7 @@ public class Interact : MonoBehaviour
                 
                     levelStatus();
                     EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                    checkEvents();
                 }
                 
             }
@@ -134,6 +142,7 @@ public class Interact : MonoBehaviour
                 GameStatus.health += 0.1f;
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Leave Room")
             {
@@ -145,6 +154,7 @@ public class Interact : MonoBehaviour
                 GameStatus.health += 0.1f;
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.R) && itemBeingPickedUp.name == "Leave Room")
             {
@@ -156,6 +166,7 @@ public class Interact : MonoBehaviour
                 GameStatus.health += 0.3f;
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             else if (Input.GetKeyDown(KeyCode.Q) && itemBeingPickedUp.name == "Leave Room")
             {
@@ -165,8 +176,15 @@ public class Interact : MonoBehaviour
                 GameStatus.fun = 1.0f;
                 GameStatus.knowledge -= 0.15f;
                 GameStatus.health -= 0.3f;
+
+                int RNG = Random.Range(0, 11);
+                if (RNG <= 3)
+                {
+                    EventBroadcaster.Instance.PostEvent("COVID");
+                }
                 levelStatus();
                 EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
+                checkEvents();
             }
             
         }
@@ -174,6 +192,8 @@ public class Interact : MonoBehaviour
         {
             EventBroadcaster.Instance.PostEvent("ON_NO_ITEM");
         }
+        
+        
     }
 
     private bool HasItemTargetted()
@@ -249,6 +269,17 @@ public class Interact : MonoBehaviour
         if (GameStatus.health > 1.0f)
         {
             GameStatus.health = 1.0f;
+        }
+    }
+
+    public void checkEvents()
+    {
+        if(GameStatus.health == 0.00f)
+        {
+            EventBroadcaster.Instance.PostEvent("SICKDAY");
+        } else if (GameStatus.energy == 0.00f)
+        {
+            EventBroadcaster.Instance.PostEvent("FAINT");
         }
     }
 }
