@@ -65,6 +65,8 @@ public class EventNames {
 	public const string CHANGE_SET = "CHANGE_SET";
 	public const string CLASS_AVAILABLE = "CLASS_AVAILABLE";
 	public const string CLASS_UNAVAILABLE = "CLASS_UNAVAILABLE";
+	public const string ON_UPDATE_BARS = "ON_UPDATE_BARS";
+	public const string ON_LOW_FUN = "ON_LOW_FUN";
 
 }
 

@@ -13,6 +13,10 @@ public class GameUI : MonoBehaviour
     public GameObject PauseScreen;
     public GameObject Interact;
     public Text InteractText;
+    public Image health;
+    public Image fun;
+    public Image knowledge;
+    public Image energy;
     //public Text ItemText;
     public float currentTime = 0f;
     public float startTime = 200f;
@@ -20,6 +24,11 @@ public class GameUI : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameStatus.health = 0.5f;
+        GameStatus.fun = 0.5f;
+        GameStatus.knowledge = 0.5f;
+        GameStatus.energy = 1.0f;
+        UpdateBars();
         //currentTime = Time.time;
         //GameStatus.location = "Library";
         //Cursor.lockState = CursorLockMode.Confined;
@@ -30,6 +39,7 @@ public class GameUI : MonoBehaviour
     {
         EventBroadcaster.Instance.AddObserver(EventNames.ON_NEAR_ITEM, this.SeeItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_NO_ITEM, this.NoItem);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_UPDATE_BARS, this.UpdateBars);
         /*
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_ON, this.SeeItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_OFF, this.NoItem);
@@ -97,10 +107,10 @@ public class GameUI : MonoBehaviour
             interactText = "BED\nE - Nap (1 hour)\nR - Sleep (8 hours)";
         }
         else if (item == "Laptop") {
-            interactText = "LAPTOP\nE - Study (1 hour)";
+            interactText = "LAPTOP\nE - Play Games (1 hour)\nR - Study (1 hour)";
             if(GameStatus.classTime == true)
             {
-                interactText = interactText + "\nR - Attend Class (3 hours)";
+                interactText = interactText + "\nQ - Attend Class (3 hours)";
             }
         }
         else if (item == "Bathroom")
@@ -129,6 +139,14 @@ public class GameUI : MonoBehaviour
     public void NoItem()
     {
         Interact.SetActive(false);
+    }
+
+    public void UpdateBars()
+    {
+        health.fillAmount = GameStatus.health;
+        fun.fillAmount = GameStatus.fun;
+        knowledge.fillAmount = GameStatus.knowledge;
+        energy.fillAmount = GameStatus.energy;
     }
     
 }
