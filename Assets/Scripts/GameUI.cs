@@ -17,6 +17,7 @@ public class GameUI : MonoBehaviour
     public Image fun;
     public Image knowledge;
     public Image energy;
+    public GameObject NoFun;
     //public Text ItemText;
     public float currentTime = 0f;
     public float startTime = 200f;
@@ -40,6 +41,7 @@ public class GameUI : MonoBehaviour
         EventBroadcaster.Instance.AddObserver(EventNames.ON_NEAR_ITEM, this.SeeItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_NO_ITEM, this.NoItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_UPDATE_BARS, this.UpdateBars);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_LOW_FUN, this.LowFun);
         /*
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_ON, this.SeeItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_OFF, this.NoItem);
@@ -143,10 +145,25 @@ public class GameUI : MonoBehaviour
 
     public void UpdateBars()
     {
+        
         health.fillAmount = GameStatus.health;
         fun.fillAmount = GameStatus.fun;
         knowledge.fillAmount = GameStatus.knowledge;
         energy.fillAmount = GameStatus.energy;
     }
-    
+
+    public void LowFun()
+    {
+        this.StartCoroutine(this.ShowHide(5.0f));
+
+    }
+
+    public IEnumerator ShowHide(float secs)
+    {
+
+        NoFun.SetActive(true);
+        yield return new WaitForSeconds(secs);
+        NoFun.SetActive(false);
+
+    }
 }

@@ -67,7 +67,8 @@ public class EventNames {
 	public const string CLASS_UNAVAILABLE = "CLASS_UNAVAILABLE";
 	public const string ON_UPDATE_BARS = "ON_UPDATE_BARS";
 	public const string ON_LOW_FUN = "ON_LOW_FUN";
-
+	public const string TEXT_LOW_HEALTH = "ON_LOW_FUN";
+	public const string TEXT_GOOD_HEALTH = "ON_GOOD_FUN";
 }
 
 

@@ -96,25 +96,33 @@ public class Interact : MonoBehaviour
             }
             else if (Input.GetKeyDown(KeyCode.Q) && itemBeingPickedUp.name == "Laptop" && GameStatus.classTime == true)
             {
-                EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
-                EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_3");
-                if (GameStatus.energy <= 0.2f)
+                if(GameStatus.fun <= 0.1f)
                 {
-                    GameStatus.energy -= 0.3f;
-                    GameStatus.fun -= 0.3f;
-                    GameStatus.knowledge += 0.2f;
-                    GameStatus.health -= 0.05f;
+                    EventBroadcaster.Instance.PostEvent("ON_LOW_FUN");
                 }
                 else
                 {
-                    GameStatus.energy -= 0.3f;
-                    GameStatus.fun -= 0.3f;
-                    GameStatus.knowledge += 0.4f;
-                    GameStatus.health -= 0.05f;
+                    EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
+                    EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK_3");
+                    if (GameStatus.energy <= 0.2f)
+                    {
+                        GameStatus.energy -= 0.3f;
+                        GameStatus.fun -= 0.3f;
+                        GameStatus.knowledge += 0.2f;
+                        GameStatus.health -= 0.05f;
+                    }
+                    else
+                    {
+                        GameStatus.energy -= 0.3f;
+                        GameStatus.fun -= 0.3f;
+                        GameStatus.knowledge += 0.4f;
+                        GameStatus.health -= 0.05f;
+                    }
+                
+                    levelStatus();
+                    EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
                 }
                 
-                levelStatus();
-                EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
             }
             else if (Input.GetKeyDown(KeyCode.E) && itemBeingPickedUp.name == "Bathroom")
             {
