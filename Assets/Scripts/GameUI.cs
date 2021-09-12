@@ -91,11 +91,7 @@ public class GameUI : MonoBehaviour
         
     }
 
-    public void SendStatus()
-    {
-        GameStatus.time = startTime;
- 
-    }
+   
 
     private void SeeItem(Parameters parameters)
     {

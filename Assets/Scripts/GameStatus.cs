@@ -23,7 +23,8 @@ public class GameStatus : MonoBehaviour
         return location;
     }
     */
-    public static float time;
+    public static int hour;
+    public static int minute;
     public static string location;
     public static float health;
     public static float knowledge;
