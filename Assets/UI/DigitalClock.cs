@@ -24,6 +24,7 @@ public class DigitalClock : MonoBehaviour
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_8", this.update8);
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_24", this.update24);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_RESTART, this.onRestart);
+
         textClock.text = "Day " + GameStatus.day + "\n" + GameStatus.hour.ToString() + ":" + GameStatus.minute.ToString() + "0";
     }
 
