@@ -19,6 +19,11 @@ public class MenuScreen : MonoBehaviour
     public void ClickStart()
     {
 
+        
+        GameStatus.health = 0.5f;
+        GameStatus.fun = 0.5f;
+        GameStatus.knowledge = 0.5f;
+        GameStatus.energy = 1.0f;
         SceneManager.LoadScene("MorningScene");
         //EventBroadcaster.Instance.PostEvent(EventNames.FindShoe.ON_START_GAME);
         //controller.onCLickStart();

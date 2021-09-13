@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 //using static UnityEditor.Progress;
 
 public class Interact : MonoBehaviour
@@ -108,6 +110,7 @@ public class Interact : MonoBehaviour
                 if (GameStatus.day == 5)
                 {
 
+                    SceneManager.LoadScene("EndScreen");
                 }
                 else
                 {
@@ -189,6 +192,7 @@ public class Interact : MonoBehaviour
                 int RNG = Random.Range(0, 11);
                 if (RNG <= 3)
                 {
+                    GameStatus.knowledge = 0.00f;
                     EventBroadcaster.Instance.PostEvent("COVID");
                 }
                 levelStatus();

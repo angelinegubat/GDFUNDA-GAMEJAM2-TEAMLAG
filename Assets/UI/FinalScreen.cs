@@ -17,12 +17,26 @@ public class FinalScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        changeScore();
     }
 
-    public void changeToLose()
+    public void changeScore()
     {
-        FinalText.text = "Game Over";
-        ScoreText.text = ":(";
+        
+        float FinalScore = GameStatus.knowledge * 100;
+        ScoreText.text = FinalScore.ToString("0.0") + "%";
+        if (FinalScore >= 100.0)
+        {
+            FinalText.text = "Perfection!";
+        }
+        else if (FinalScore >= 60.0)
+        {
+            FinalText.text = "You Passed!";
+        }
+        else
+        {
+            FinalText.text = "Try Again!";
+        }
+       
     }
 }

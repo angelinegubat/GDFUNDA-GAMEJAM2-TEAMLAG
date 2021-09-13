@@ -11,6 +11,7 @@ public class PlayerMove : MonoBehaviour
     public GameObject Paused;
     public GameObject Sick;
     public GameObject Faint;
+    public GameObject Missed;
     public GameObject Corona;
     public GameObject SS;
     // Start is called before the first frame update
@@ -24,7 +25,7 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!Paused.active && !Sick.active && !Faint.active && !Corona.active && !SS.active)
+        if (!Paused.active && !Sick.active && !Faint.active && !Corona.active && !SS.active && !Missed.active)
         {
             float x = Input.GetAxis("Horizontal");
             float z = Input.GetAxis("Vertical");

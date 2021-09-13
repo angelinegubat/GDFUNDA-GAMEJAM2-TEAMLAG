@@ -23,6 +23,7 @@ public class DigitalClock : MonoBehaviour
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_6", this.update6);
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_8", this.update8);
         EventBroadcaster.Instance.AddObserver("UPDATE_CLOCK_24", this.update24);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_RESTART, this.onRestart);
         textClock.text = "Day " + GameStatus.day + "\n" + GameStatus.hour.ToString() + ":" + GameStatus.minute.ToString() + "0";
     }
 
@@ -188,6 +189,7 @@ public class DigitalClock : MonoBehaviour
         textClock.text = "Day " + GameStatus.day + "\n" + GameStatus.hour.ToString() + ":" + GameStatus.minute.ToString() + "0";
 
         checkClass();
+        
     }
 
     public void checkClass()
@@ -198,6 +200,24 @@ public class DigitalClock : MonoBehaviour
         {
             EventBroadcaster.Instance.PostEvent("CLASS_UNAVAILABLE");
         }
+        checkEnd();
+    }
+
+    public void checkEnd()
+    {
+        if (GameStatus.day > 5 || (GameStatus.day == 5 && GameStatus.hour > 16))
+        {
+            
+            GameStatus.knowledge = 0.00f;
+            EventBroadcaster.Instance.PostEvent("MISSED_EXAM");
+            
+            //SceneManager.LoadScene("EndScreen");
+        } 
+    }
+
+    public void onRestart()
+    {
+        textClock.text = "Day " + GameStatus.day + "\n" + GameStatus.hour.ToString() + ":" + GameStatus.minute.ToString() + "0";
     }
 
 }
