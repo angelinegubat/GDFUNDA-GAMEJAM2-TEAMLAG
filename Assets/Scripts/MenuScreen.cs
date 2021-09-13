@@ -13,7 +13,7 @@ public class MenuScreen : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //SceneManager.UnloadScene("MorningScene");
     }
 
     public void ClickStart()

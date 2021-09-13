@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraRotate : MonoBehaviour
 {
-    public float Speed = 650.0f;
+    public float Speed = 100.0f;
     public Transform playerBody;
     float xRotation = 0f;
     public GameObject Paused;
