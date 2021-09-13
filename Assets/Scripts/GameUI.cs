@@ -16,6 +16,8 @@ public class GameUI : MonoBehaviour
     public GameObject FaintScreen;
     public GameObject StartScreen;
     public GameObject Interact;
+    public GameObject InteractCopy;
+    public GameObject MissedScreen;
     public Text InteractText;
     public Image health;
     public Image fun;
@@ -36,6 +38,13 @@ public class GameUI : MonoBehaviour
         GameStatus.energy = 1.0f;
         UpdateBars();
         StartScreen.SetActive(true);
+        PauseScreen.SetActive(false);
+        SickScreen.SetActive(false);
+        CovidScreen.SetActive(false);
+        FaintScreen.SetActive(false);
+        MissedScreen.SetActive(false);
+        Interact.SetActive(true);
+        //InteractCopy = Interact;
         //currentTime = Time.time;
         //GameStatus.location = "Library";
         //Cursor.lockState = CursorLockMode.Confined;
@@ -45,13 +54,15 @@ public class GameUI : MonoBehaviour
     void Awake()
     {
         EventBroadcaster.Instance.AddObserver(EventNames.ON_NEAR_ITEM, this.SeeItem);
-        EventBroadcaster.Instance.AddObserver(EventNames.ON_NO_ITEM, this.NoItem);
+        EventBroadcaster.Instance.AddObserver(EventNames.ON_RESTART, this.UpdateBars);
+        //EventBroadcaster.Instance.AddObserver(EventNames.ON_NO_ITEM, this.NoItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_UPDATE_BARS, this.UpdateBars);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_LOW_FUN, this.LowFun);
         EventBroadcaster.Instance.AddObserver(EventNames.ON_LOW_FUN2, this.LowFun2);
         EventBroadcaster.Instance.AddObserver(EventNames.FAINT, this.Faint);
         EventBroadcaster.Instance.AddObserver(EventNames.SICKDAY, this.SickDay);
         EventBroadcaster.Instance.AddObserver(EventNames.COVID, this.Covid);
+        EventBroadcaster.Instance.AddObserver(EventNames.MISSED_EXAM, this.MissedExam);
         /*
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_ON, this.SeeItem);
         EventBroadcaster.Instance.AddObserver(EventNames.ITEM_PICKUP_OVERLAY_OFF, this.NoItem);
@@ -71,6 +82,7 @@ public class GameUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+      
         if (!PauseScreen.active )
         {
             
@@ -125,7 +137,7 @@ public class GameUI : MonoBehaviour
 
         else
         {
-            interactText = "Interact with \n" + parameters.GetStringExtra("item", "SomeItem");
+            interactText = "";
         }
             
             
@@ -136,11 +148,15 @@ public class GameUI : MonoBehaviour
 
 
 
-
+    /*
     public void NoItem()
     {
-        Interact.SetActive(false);
-    }
+        
+            Interact.SetActive(false);
+        InteractText.text = "";
+
+
+    }*/
 
     public void UpdateBars()
     {
@@ -194,4 +210,11 @@ public class GameUI : MonoBehaviour
     {
         CovidScreen.SetActive(true);
     }
+
+    public void MissedExam()
+    {
+        MissedScreen.SetActive(true);
+    }
+
+    
 }

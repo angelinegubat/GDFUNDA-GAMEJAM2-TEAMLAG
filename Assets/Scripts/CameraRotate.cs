@@ -4,13 +4,14 @@ using UnityEngine;
 
 public class CameraRotate : MonoBehaviour
 {
-    public float Speed = 800.0f;
+    public float Speed = 100.0f;
     public Transform playerBody;
     float xRotation = 0f;
     public GameObject Paused;
     public GameObject Sick;
     public GameObject Faint;
     public GameObject Corona;
+    public GameObject Missed;
     public GameObject SS;
     void Start()
     {
@@ -19,7 +20,7 @@ public class CameraRotate : MonoBehaviour
     
     void Update()
     {
-        if (!Paused.active && !Sick.active && !Faint.active && !Corona.active && !SS.active)
+        if (!Paused.active && !Sick.active && !Faint.active && !Corona.active && !SS.active && !Missed.active)
         {
             float mouseX = Input.GetAxis("Mouse X") * Speed * Time.deltaTime;
             float mouseY = Input.GetAxis("Mouse Y") * Speed * Time.deltaTime;

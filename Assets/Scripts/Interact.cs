@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
+
 //using static UnityEditor.Progress;
 
 public class Interact : MonoBehaviour
@@ -12,6 +14,10 @@ public class Interact : MonoBehaviour
     [SerializeField] private LayerMask mask;
     public string shoeArea;
     private Item itemBeingPickedUp;
+    public GameObject InteractP;
+    public GameObject InteractT;
+    private static GameObject goInstance;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,6 +32,16 @@ public class Interact : MonoBehaviour
     {
         EventBroadcaster.Instance.AddObserver(EventNames.CLASS_AVAILABLE, this.classAvailable);
         EventBroadcaster.Instance.AddObserver(EventNames.CLASS_UNAVAILABLE, this.classUnavailable);
+        if (goInstance == null)
+        {
+            DontDestroyOnLoad(gameObject);
+            goInstance = gameObject;
+        }
+        else
+        {
+            //destroy duplicate
+            Object.Destroy(gameObject);
+        }
     }
 
 
@@ -38,6 +54,11 @@ public class Interact : MonoBehaviour
 
         if (HasItemTargetted())
         {
+            InteractP.SetActive(true);
+            InteractT.SetActive(true);
+
+
+            //InteractText.text = interactText;
             Parameters updateItemParams = new Parameters();
             updateItemParams.PutExtra("item", itemBeingPickedUp.gameObject.name);
             EventBroadcaster.Instance.PostEvent("ON_NEAR_ITEM", updateItemParams);
@@ -46,6 +67,7 @@ public class Interact : MonoBehaviour
             //HEALTH -1/2H
             //FUN -1/2H
             //ENERGY -1/1H
+            Debug.Log(itemBeingPickedUp.name);
             if (Input.GetKeyDown(KeyCode.R) && itemBeingPickedUp.name == "Bed")
             {
                 EventBroadcaster.Instance.PostEvent("UPDATE_CLOCK");
@@ -108,6 +130,7 @@ public class Interact : MonoBehaviour
                 if (GameStatus.day == 5)
                 {
 
+                    SceneManager.LoadScene("EndScreen");
                 }
                 else
                 {
@@ -189,6 +212,7 @@ public class Interact : MonoBehaviour
                 int RNG = Random.Range(0, 11);
                 if (RNG <= 3)
                 {
+                    GameStatus.knowledge = 0.00f;
                     EventBroadcaster.Instance.PostEvent("COVID");
                 }
                 levelStatus();
@@ -199,7 +223,8 @@ public class Interact : MonoBehaviour
         }
         else
         {
-            EventBroadcaster.Instance.PostEvent("ON_NO_ITEM");
+            InteractP.SetActive(false);
+            InteractT.SetActive(false);
         }
         
         

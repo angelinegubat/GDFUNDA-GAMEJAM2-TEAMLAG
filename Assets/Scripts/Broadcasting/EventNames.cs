@@ -74,6 +74,8 @@ public class EventNames {
 	public const string FAINT = "FAINT";
 	public const string SICKDAY = "SICKDAY";
 	public const string COVID = "COVID";
+	public const string MISSED_EXAM = "MISSED_EXAM";
+	public const string ON_RESTART = "ON_RESTART";
 }
 
 

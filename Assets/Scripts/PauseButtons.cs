@@ -53,4 +53,9 @@ public class PauseButtons : MonoBehaviour
         pauseScreen.SetActive(false);
         EventBroadcaster.Instance.PostEvent("ON_UPDATE_BARS");
     }
+
+    public void ClickMissed()
+    {
+        SceneManager.LoadScene("EndScreen");
+    }
 }

@@ -32,4 +32,6 @@ public class GameStatus : MonoBehaviour
     public static float energy;
     public static bool classTime;
     public static int day;
+    public static bool covid;
+    public static bool missed;
 }
